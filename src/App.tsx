@@ -3,9 +3,12 @@ import useSignTypedData from './hooks/useSignTypedData'
 import { readContract } from 'wagmi/actions'
 import EIP712OrderVerifyABI from './abi/EIP712OrderVerify.json'
 import { useAccount } from 'wagmi'
+import useMultiCall from './hooks/useMultiCall'
 function App() {
   const { onSignTypedData } = useSignTypedData()
   const { address } = useAccount()
+
+  const { getTokenBalance } = useMultiCall()
 
   const handleSignTypedData = async () => {
     const { r, s, v } = await onSignTypedData()
@@ -32,6 +35,13 @@ function App() {
         onClick={handleSignTypedData}
       >
         Sign Typed Data
+      </Button>
+
+      <Button
+        variant='outlined'
+        onClick={getTokenBalance}
+      >
+        use multicall
       </Button>
     </>
   )
